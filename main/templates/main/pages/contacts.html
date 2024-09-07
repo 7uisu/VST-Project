@@ -1,0 +1,69 @@
+{% extends 'main/pages/index.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="contacts-section fade-in">
+    <div class="contacts-container">
+        <h1>Contact Us</h1>
+        <hr>
+        <div class="contact-content">
+            <div class="map-container">
+                <div id="map"></div>
+            </div>
+            <div class="contact-details">
+                <div class="contact-header">
+                    <img src="{% static 'main/images/Contact-Page-Elements/1.png' %}" alt="Telephone Icon">
+                    <div class="contact-title">
+                        <h2>TELEPHONE:</h2>
+                        <h3>(02)8647-5165 / (02)8647-5168</h3>
+                    </div>
+                </div>
+                <div class="contact-header">
+                    <img src="{% static 'main/images/Contact-Page-Elements/2.png' %}" alt="Email Icon">
+                    <div class="contact-title">
+                        <h2>EMAIL:</h2>
+                        <h3>vst@vstlivestockcorporation.net<br> / vstlivestock.corp@gmail.com</h3>
+                    </div>
+                </div>
+                <div class="contact-header">
+                    <img src="{% static 'main/images/Contact-Page-Elements/5.png' %}" alt="Facebook Icon">
+                    <div class="contact-title">
+                        <h2>FACEBOOK:</h2>
+                        <h3>VST LIVESTOCK CORPORATION</h3>
+                    </div>
+                </div>
+                <div class="contact-header">
+                    <img src="{% static 'main/images/Contact-Page-Elements/4.png' %}" alt="Clock Icon">
+                    <div class="contact-title">
+                        <h2>BUSINESS HOURS:</h2>
+                        <h3>Operating hours - 9:00 pm - 4:00 am
+                            <br> Office hours - 8:00 am - 5:00 pm
+                        </h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Leaflet.js CSS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+<!-- Leaflet.js JavaScript -->
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script src="https://kit.fontawesome.com/a076d05399.js"></script>
+
+<script>
+    var map = L.map('map').setView([14.625286849792321, 121.14756852245898], 18);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    L.marker([14.625286849792321, 121.14756852245898]).addTo(map)
+        .bindPopup('VST Livestock Corp.')
+        .openPopup();
+</script>
+
+{% endblock %}
+

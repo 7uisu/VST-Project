@@ -1,0 +1,21 @@
+{% extends 'main/pages/index.html' %}
+{% load static %}
+
+{% block content %}
+<div class="section-delete-event-bg">
+    <div id="section-delete-event" class="delete-event-section">
+        <div class="delete-event-container">
+            <h1>Delete Event</h1>
+            <p>Are you sure you want to delete the event "{{ event.title }}"?</p>
+            <div class="current-image">
+                <img src="{{ event.thumbnail.url }}" alt="Current Image" class="delete-event-image">
+            </div>
+            <form method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">Confirm Delete</button>
+                <a href="{% url 'admin-panel' %}" class="btn btn-secondary">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

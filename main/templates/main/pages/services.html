@@ -1,0 +1,116 @@
+{% extends 'main/pages/index.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="services-section fade-in">
+    <div class="services-container">
+        <h1>Services</h1>
+        <hr>
+        <div class="services-grid">
+            
+            <!-- Service 1 -->
+            <div class="service fade-in">
+                <div class="service-details">
+                    <div class="service-header fade-in">
+                        <img src="{% static 'main/images/Services-Page-Elements/Butchers-Knife.png' %}" alt="Hog Icon">
+                        <div class="service-title">
+                            <h2>Hog Slaughtering Facilities</h2>
+                            <h3>Precision and Care in Every Step</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="service-content fade-in">
+                    <p>We offer premium slaughtering facilities ensuring high standards of hygiene; animal welfare.</p>
+                </div>
+                <div class="service-image-wrapper fade-in">
+                    <img src="{% static 'main/images/VST-Pictures/photo1716684872_(2).jpeg' %}" alt="Hog Slaughtering Facilities" class="services-picture">
+                </div>
+            </div>
+            
+            <!-- Service 2 -->
+            <div class="service fade-in">
+                <div class="service-details">
+                    <div class="service-header fade-in">
+                        <img src="{% static 'main/images/Services-Page-Elements/Graduation-Cap.png' %}" alt="TESDA Icon">
+                        <div class="service-title">
+                            <h2>TESDA Accredited Training</h2>
+                            <h3>Empowering Future Experts</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="service-content fade-in">
+                    <p>In partnership with B&B Training Academy, we provide assistance with regards to their students' assessments/actual slaughtering course.</p>
+                </div>
+                <div class="service-image-wrapper fade-in">
+                    <img src="{% static 'main/images/340219317_1409568016251307_1345610508024267391_n.jpg' %}" alt="TESDA Accredited Training" class="services-picture">
+                </div>
+            </div>
+            
+            <!-- Service 3 -->
+            <div class="service fade-in">
+                <div class="service-details">
+                    <div class="service-header fade-in">
+                        <img src="{% static 'main/images/Services-Page-Elements/Recycle.png' %}" alt="Zero Waste Icon">
+                        <div class="service-title">
+                            <h2>Zero-Waste Management Facility</h2>
+                            <h3>Sustainability in Action</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="service-content fade-in">
+                    <p>Our facility is committed to sustainability with advanced waste management systems designed to minimize environmental impact.</p>
+                </div>
+                <div class="service-image-wrapper fade-in">
+                    <img src="{% static 'main/images/VST-Pictures/27073acf-c65f-4029-9450-6620bd7c035f.jpg' %}" alt="Zero-Waste Management Facility" class="services-picture">
+                </div>
+            </div>
+            
+            <!-- Service 4 -->
+            <div class="service fade-in">
+                <div class="service-details">
+                    <div class="service-header fade-in">
+                        <img src="{% static 'main/images/Services-Page-Elements/Speech-Bubble.png' %}" alt="Training Icon">
+                        <div class="service-title">
+                            <h2>Training Skills Improvement</h2>
+                            <h3>Guiding You to Excellence</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="service-content fade-in">
+                    <p>Quarterly assessment of butchers that is potential to be trained further technical, actual skills that will be used to train others.</p>
+                </div>
+                <div class="service-image-wrapper fade-in">
+                    <img src="{% static 'main/images/345244080_957445892054366_1853935472873338693_n.jpg' %}" alt="Training Skills Improvement" class="services-picture">
+                </div>
+            </div>
+            
+            <!-- Service 5 -->
+            <div class="service fade-in">
+                <div class="service-details">
+                    <div class="service-header fade-in">
+                        <img src="{% static 'main/images/Services-Page-Elements/Group.png' %}" alt="Employment Icon">
+                        <div class="service-title">
+                            <h2>Local Employment Opportunities</h2>
+                            <h3>Building Stronger Communities</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="service-content fade-in">
+                    <p>We employed 150 butchers with health permits, 80% of whom live near our facility, fostering strong community ties and supporting the local economy.</p>
+                </div>
+                <div class="service-image-wrapper fade-in">
+                    <img src="{% static 'main/images/291763919_3089905457988917_1293059562381288906_n.jpg' %}" alt="Local Employment Opportunities" class="services-picture">
+                </div>
+            </div>
+            
+        </div>
+        <p class="contact-us-button-heading fade-in">
+            TO INQUIRE, CLICK HERE FOR MORE INFORMATION
+        </p>
+        <div class="contact-us fade-in">
+            <a href="{% url 'contacts' %}">CONTACT US</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

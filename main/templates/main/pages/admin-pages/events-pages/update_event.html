@@ -1,0 +1,54 @@
+{% extends 'main/pages/index.html' %}
+{% load static %}
+
+{% block content %}
+<div class="section-update-event" id="section-update-event">
+    <div class="update-event-container">
+        <h1>Update Event</h1>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ event_form.as_p }}
+            {{ formset.management_form }}
+
+            <div class="current-images">
+                <h2>Current Images</h2>
+                {% for form in formset %}
+                    {% if form.instance.pk %}
+                        <div class="current-image">
+                            <img src="{{ form.instance.image.url }}" class="update-event-image" alt="Current Image">
+                            {{ form.as_p }}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+
+            <div class="image-uploads">
+                <h2>Upload Images</h2>
+                <!-- Empty forms will be dynamically inserted here -->
+            </div>
+
+            <button type="submit" class="btn btn-primary">Update Event</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const imageUploadsContainer = document.querySelector(".image-uploads");
+        const currentImagesCount = document.querySelectorAll(".current-image").length;
+        const totalInputs = 5;
+        const remainingInputs = totalInputs - currentImagesCount;
+        const formGroupTemplate = `
+            <div class="form-group image-upload">
+                <label for="id_form-__prefix__-image">Image:</label>
+                <input type="file" name="form-__prefix__-image" id="id_form-__prefix__-image">
+            </div>
+        `;
+
+        for (let i = 0; i < remainingInputs; i++) {
+            const newFormGroup = formGroupTemplate.replace(/__prefix__/g, currentImagesCount + i);
+            imageUploadsContainer.insertAdjacentHTML('beforeend', newFormGroup);
+        }
+    });
+</script>
+{% endblock %}

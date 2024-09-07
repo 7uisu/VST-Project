@@ -1,0 +1,23 @@
+{% extends 'main/pages/index.html' %}
+{% load static %}
+
+{% block content %}
+<div class="section-verify-email">
+    <div class="verify-email-container">
+        <h2>Verify Email</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn-verify">Verify</button>
+        </form>
+        <form method="post" class="form-resend-cancel">
+            {% csrf_token %}
+            <button name="resend_code" type="submit" class="btn-resend">Resend Code</button>
+            <button name="cancel" type="submit" class="btn-cancel">Cancel</button>
+        </form>
+        {% if message %}
+            <p>{{ message }}</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

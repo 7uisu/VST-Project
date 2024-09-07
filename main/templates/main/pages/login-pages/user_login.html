@@ -1,0 +1,17 @@
+{% extends 'main/pages/index.html' %}
+{% load static %}
+
+{% block content %}
+<div class="section-user-login">
+    <div class="login-container">
+        <h2>Login</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Login</button>
+        </form>
+        <p>Don't have an account? <a href="{% url 'user-register' %}?next-register{{ next }}">Register here</a></p>
+        <p><a href="{% url 'password-reset' %}">Forgot Password?</a></p>
+    </div>
+</div>
+{% endblock %}

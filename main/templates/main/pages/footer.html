@@ -1,0 +1,38 @@
+{% load static %}
+<footer class="footer">
+    <div class="footer-content">
+        <div class="footer-logo">
+            <a href="{% url 'home' %}" class="footer-logo">
+                <img src="{% static 'main/images/Logos/VST_LOGO.png' %}" alt="VST Livestock Corporation Logo">
+                <div class="footer-vst-text">VST</div>
+                <div class="footer-live-corp-text">
+                    <div>LIVESTOCK</div>
+                    <div>CORPORATION</div>
+                </div>
+            </a>
+        </div>
+        <div class="footer-links">
+            <div>
+                <a href="{% url 'home' %}">Home</a>
+                <a href="{% url 'home' %}#section2" id="about-button">About</a>
+                <a href="{% url 'home' %}#section3" id="partners-button">Partners</a>
+                <a href="{% url 'services' %}">Services</a>
+            </div>
+            <div>
+                <a href="{% url 'events' %}">Events</a>
+                <a href="{% url 'contacts' %}">Contact</a>
+                <a href="{% url 'feedback' %}" id="feedback-button" class="feedback-btn"><span class="btn-text">Feedback</a>
+            </div>
+                <div class="social-icons">
+                    <a href="https://www.facebook.com/profile.php?id=100063716003590">
+                        <img src="{% static '/main/images/Logos/facebook.png' %}" alt="Facebook Icon" class="social-icon">
+                    </a>
+                </div>
+        </div>
+        
+    </div>
+    <div class="footer-bottom">
+        <hr>
+        <p>&copy; Copyright 2024 VST Livestock Corp. All rights reserved.</p>
+    </div>
+</footer>

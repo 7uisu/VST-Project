@@ -1,0 +1,15 @@
+{% extends 'main/pages/index.html' %}
+{% load static %}
+
+{% block content %}
+<div class="section-admin-register">
+    <div class="admin-register-container">
+        <h2>Admin Registration</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Register</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

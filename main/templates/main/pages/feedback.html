@@ -1,0 +1,57 @@
+{% extends 'main/pages/index.html' %}
+{% load static %}
+{% load custom_tags %}
+
+{% block content %}
+<div id="feedback-section" class="feedback-section">
+    <div class="feedback-container">
+        <h1>Survey</h1>
+        <hr>
+        <div class="survey-form-container">
+            <form method="post" class="survey-form">
+                {% csrf_token %}
+                {% for question in questions %}
+                    <div class="question-box">
+                        <div class="form-group">
+                            <label>{{ question.text }}</label>
+                            {% if question.question_type == 'text' %}
+                                <input type="text" name="response_{{ question.id }}" class="form-control" placeholder="Enter your answer">
+                            {% elif question.question_type == 'radio' %}
+                                <div class="form-check-group">
+                                    {% for option in question.radio_choices|split:"," %}
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="response_{{ question.id }}" value="{{ option }}">
+                                            <label class="form-check-label">{{ option }}</label>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            {% elif question.question_type == 'rating_1_5' %}
+                                <div class="form-check-group">
+                                    {% for i in 1|to:5 %}
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="response_{{ question.id }}" value="{{ i }}">
+                                            <label class="form-check-label">{{ i }}</label>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            {% elif question.question_type == 'rating_1_10' %}
+                                <div class="form-check-group">
+                                    {% for i in 1|to:10 %}
+                                        <div class="form-check-inline">
+                                            <input class="form-check-input" type="radio" name="response_{{ question.id }}" value="{{ i }}">
+                                            <label class="form-check-label">{{ i }}</label>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endfor %}
+                <div class="btn-container">
+                    <button type="submit" class="btn btn-primary">SUBMIT</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

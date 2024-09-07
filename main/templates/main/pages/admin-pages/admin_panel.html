@@ -1,0 +1,149 @@
+{% extends 'main/pages/index.html' %}
+{% load static %}
+{% load custom_tags %}
+{% load tz %}
+
+{% block content %}
+    {% include 'main/pages/admin-pages/admin_navbar.html' %}
+
+<div id="section-admin-panel" class="admin-panel">
+    <h1>Admin Panel</h1>
+
+    <div class="summary-cards">
+        <div class="card">
+            <p>{{ total_responses }}</p>
+            <h3>Total Responses:</h3>
+        </div>
+        <div class="card">
+            <ul>
+                {% for response in recent_responses %}
+                    <li>
+                        <p class="email">{{ response.user.email }}</p>
+                    </li>
+                {% endfor %}
+            </ul>
+            <h3 class="card-title">Recent Responses:</h3>
+        </div>
+    </div>
+    
+    <div class="mb-3">
+        <a href="{% url 'export-responses' %}" class="export-responses-btn">Export to Excel</a>
+    </div>
+
+<!-- New section for responses (Vertical Layout with Blue Questions and Bottom Delete Button) -->
+<div id="section-responses" class="table-section mt-5">
+    <div class="section-header">
+        <h2>Responses</h2>
+        <a href="{% url 'delete-all-responses' %}" class="delete-all-responses-btn">Delete All Responses</a>
+    </div>
+    <div class="admin-table-wrapper">
+        <div class="table-responsive">
+            <table class="admin-responses-table"> <!-- Use a unique class for the responses table -->
+                <thead>
+                    <tr>
+                        <th>Email:</th>
+                        {% for user in user_responses.keys %}
+                            <th>{{ user.email }}</th>
+                        {% endfor %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for question in questions %}
+                        <tr>
+                            <td class="question-column">{{ question.text }}</td>
+                            {% for user, responses in user_responses.items %}
+                                <td>
+                                    {% with response=responses|get_item:question.id %}
+                                        {{ response.text|default:"-" }}
+                                    {% endwith %}
+                                </td>
+                            {% endfor %}
+                        </tr>
+                    {% endfor %}
+                    <tr>
+                        <td class="actions-column">Actions</td>
+                        {% for user in user_responses.keys %}
+                            <td>
+                                <a href="{% url 'delete-response' user.id %}" class="delete-response-btn">Delete</a>
+                            </td>
+                        {% endfor %}
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+    <div class="mb-3">
+        <a href="{% url 'add-question' %}" class="add-question-btn">Add Question</a>
+    </div>
+
+    <div id="section-questions" class="table-section">
+        <div class="section-header">
+            <h2>Questions</h2>
+        </div>
+        <div class="admin-table-wrapper">
+            <div class="table-responsive">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Question ID</th>
+                            <th>Question Text</th>
+                            <th>Question Type</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for question in questions %}
+                            <tr>
+                                <td>{{ question.id }}</td>
+                                <td>{{ question.text }}</td>
+                                <td>{{ question.get_question_type_display }}</td>
+                                <td>
+                                    <div class="admin-dropdown">
+                                        <button class="admin-dropdown-toggle" type="button" onclick="toggleAdminDropdown({{ question.id }})">
+                                            &#9776;
+                                        </button>
+                                        <ul class="admin-dropdown-menu" id="admin-dropdown-{{ question.id }}">
+                                            <li><a class="admin-dropdown-item" href="{% url 'update-question' question.id %}">Edit</a></li>
+                                            <li><a class="admin-dropdown-item text-danger" href="{% url 'delete-question' question.id %}">Delete</a></li>
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    function toggleAdminDropdown(id) {
+        var dropdown = document.getElementById('admin-dropdown-' + id);
+        dropdown.classList.toggle('show');
+    }
+
+    window.onclick = function(event) {
+        if (!event.target.matches('.admin-dropdown-toggle')) {
+            var dropdowns = document.getElementsByClassName("admin-dropdown-menu");
+            for (var i = 0; i < dropdowns.length; i++) {
+                var openDropdown = dropdowns[i];
+                if (openDropdown.classList.contains('show')) {
+                    openDropdown.classList.remove('show');
+                }
+            }
+        }
+    }
+
+    document.querySelectorAll('.admin-dropdown-menu').forEach(dropdown => {
+        dropdown.addEventListener('mouseleave', function() {
+            dropdown.classList.remove('show');
+        });
+    });
+</script>
+
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends 'main/pages/index.html' %}
+{% load static %}
+
+{% block content %}
+<div class="section-add-event">
+    <div class="add-event-container">
+        <h1>Add Event</h1>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ event_form.as_p }}
+            {{ formset.management_form }}
+            {% for form in formset %}
+                {{ form.as_p }}
+            {% endfor %}
+            <button type="submit" class="btn btn-primary">Create Event</button>
+            <a href="{% url 'admin-panel' %}" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+</div>      
+{% endblock %}

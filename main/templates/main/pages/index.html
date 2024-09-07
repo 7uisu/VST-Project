@@ -1,0 +1,48 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>VST Livestock Corporation</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="{% static 'main/images/Logos/VST_LOGO.png' %}">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="{% static 'main/css/styles.css' %}">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet"> <!-- Inter Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Koulen&display=swap" rel="stylesheet"> <!-- Koulen Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet"> <!-- Outfit Font -->
+
+    <!-- Slick Carousel CSS -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
+
+    <!-- Slick Carousel JS -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+
+
+</head>
+<body>
+    <!-- Navbar -->
+    {% include 'main/pages/navbar.html' %}
+    
+    <!-- Content Block -->
+    {% block content %}
+        {# Homepage Content #}
+    {% endblock %}
+    
+    <!-- Footer -->
+    {% include 'main/pages/footer.html' %}
+
+    <!-- JavaScript Scripts -->
+    <script src="{% static 'main/js/scripts.js' %}"></script>
+    <script src="{% static 'main/js/fade-in-effect.js' %}"></script>
+    
+</body>
+</html>

@@ -1,0 +1,213 @@
+{% extends 'main/pages/index.html' %}
+{% load static %}
+
+{% block content %}
+
+    <!-- Loader -->
+    <div id="loader-wrapper">
+        <div class="loader-container">
+            <img src="{% static '/main/images/Logos/VST_LOGO_2.png' %}" alt="Logo" class="loader-logo">
+            <div class="loader"></div>
+        </div>
+    </div>
+
+<div id="content" style="display: none;">
+
+<!-- Home Section -->
+<div id="section1">
+    <div class="section1-background">
+        <img src="{% static '/main/images/VST-Pictures/photo1716684872.jpeg' %}" alt="Background Image" class="background">
+    </div>
+    <div class="section1-overlay"></div> <!-- Overlay div -->
+
+    <div class="section1-content fade-in">
+        <div class="logo-and-text">
+            <img src="{% static '/main/images/Logos/VST_LOGO.png' %}" alt="VST Livestock Corporation Logo">
+            <div class="home-vst-text">VST</div>
+            <div class="home-live-corp-text">
+                <div>LIVESTOCK</div>
+                <div>CORPORATION</div>
+            </div>
+        </div>
+        <div class="home-button">
+            <a href="#section2" class="button">CLICK HERE!</a>
+        </div>
+    </div><!-- end div section1-content -->
+</div>
+
+<!-- Events Section -->
+<div id="section2">
+    <div class="events-home-section fade-in">
+        <h1>Future Events</h1>
+        <div class="event-carousel-container fade-in">
+            <div class="event-carousel fade-in">
+                {% for image in carousel_images %}
+                    <div class="carousel-slide">
+                        <img src="{{ image.image.url }}" alt="Carousel Image">
+                        {% if image.caption %}
+                            <div class="carousel-caption">
+                                <p>{{ image.caption }}</p>
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <h2 class="fade-in">CLICK HERE TO SEE PAST EVENTS</h2>
+        <a href="{% url 'events' %}" class="more-events-button fade-in">MORE EVENTS</a>
+    </div>
+</div>
+
+<!-- Modal Structure -->
+<div id="home-image-modal" class="home-modal">
+    <span class="home-close">&times;</span>
+    <img class="home-modal-content" id="home-modal-img">
+</div>
+
+<script>
+    $(document).ready(function() {
+        // Initialize the carousel
+        $('.event-carousel').slick({
+            autoplay: true,
+            autoplaySpeed: 3000,
+            dots: true,
+            arrows: true,
+            prevArrow: '<button type="button" class="slick-prev">Previous</button>',
+            nextArrow: '<button type="button" class="slick-next">Next</button>',
+        });
+
+        // Modal functionality for carousel images
+        const homeCarouselModal = document.getElementById("home-image-modal");
+        const homeCarouselModalImg = document.getElementById("home-modal-img");
+        const homeCarouselCloseBtn = document.getElementsByClassName("home-close")[0];
+
+        let isSwiping = false;
+
+        // Show modal on image click
+        $('.event-carousel img').on('click', function() {
+            if (!isSwiping) {
+                homeCarouselModal.style.display = "flex";
+                homeCarouselModalImg.src = this.src;
+            }
+        });
+
+        // Close modal on click
+        homeCarouselCloseBtn.onclick = function() {
+            homeCarouselModal.style.display = "none";
+        };
+
+        window.onclick = function(event) {
+            if (event.target == homeCarouselModal) {
+                homeCarouselModal.style.display = "none";
+            }
+        };
+
+        // Detect swiping within slick carousel
+        $('.event-carousel').on('touchstart', function(event) {
+            isSwiping = false;
+            startX = event.touches[0].clientX;
+            startY = event.touches[0].clientY;
+            startTime = new Date().getTime();
+        });
+
+        $('.event-carousel').on('touchmove', function(event) {
+            const moveX = event.touches[0].clientX;
+            const moveY = event.touches[0].clientY;
+            const distX = Math.abs(moveX - startX);
+            const distY = Math.abs(moveY - startY);
+
+            if (distX > 10 || distY > 10) { // Threshold for swipe detection
+                isSwiping = true;
+            }
+        });
+
+        $('.event-carousel').on('touchend', function() {
+            const elapsedTime = new Date().getTime() - startTime;
+
+            if (elapsedTime < 200 && !isSwiping) {
+                setTimeout(function() {
+                    isSwiping = false;
+                }, 300);
+            } else {
+                isSwiping = false;
+            }
+        });
+
+        homeCarouselModal.style.display = "none";
+    });
+</script>
+
+
+
+
+<!-- About Section -->
+<div id="section3">
+    <div class="about-section fade-in">
+        <h1 class="about-heading fade-in">What We Do</h1>
+        <p class="about-description fade-in">
+            <strong>VST Livestock Corp.</strong> prioritizes <strong>animal welfare</strong>, <strong>premium slaughtering</strong>, and <strong>zero waste</strong> for <strong>safe, quality meat</strong>.
+            We aim to lead in <strong>cleanliness</strong>, <strong>safety</strong>, and <strong>sustainability</strong>, focused on <strong>customer satisfaction</strong>.
+        </p>
+        <div class="slider fade-in">
+            <div class="slide-track fade-in">
+                <div class="slide fade-in"><img src="{% static '/main/images/VST-Pictures/photo1716684872.jpeg' %}"></div>
+                <div class="slide fade-in"><img src="{% static '/main/images/291763919_3089905457988917_1293059562381288906_n.jpg' %}"></div>
+                <div class="slide fade-in"><img src="{% static '/main/images/VST-Pictures/photo1716684873 (2).jpeg' %}"></div>
+                <div class="slide fade-in"><img src="{% static '/main/images/340052699_748969933541080_975567495857681346_n.jpg' %}"></div>
+                <div class="slide fade-in"><img src="{% static '/main/images/VST-Pictures/photo1716684873 (1).jpeg' %}"></div>
+                <!-- Duplicate images for continuous effect -->
+                <div class="slide"><img src="{% static '/main/images/VST-Pictures/photo1716684872.jpeg' %}"></div>
+                <div class="slide"><img src="{% static '/main/images/291763919_3089905457988917_1293059562381288906_n.jpg' %}"></div>
+                <div class="slide"><img src="{% static '/main/images/VST-Pictures/photo1716684873 (2).jpeg' %}"></div>
+                <div class="slide"><img src="{% static '/main/images/340052699_748969933541080_975567495857681346_n.jpg' %}"></div>
+                <div class="slide"><img src="{% static '/main/images/VST-Pictures/photo1716684873 (1).jpeg' %}"></div>
+            </div>
+        </div>
+        <p class="about-button-heading fade-in">
+            FOR MORE INFORMATION, CHECK OUT OUR SERVICES
+        </p>
+        <a href="{% url 'services' %}" class="cta-button fade-in">CLICK HERE!</a>
+    </div>
+</div>
+
+<!-- Partners Section -->
+<div id="section4">
+    <div class="partners-section fade-in">
+        <h2 class="fade-in">PARTNERS WITH</h2>
+        <div class="partners fade-in">
+            <div class="partner bb fade-in">
+                <a href="https://www.facebook.com/BBAcademyPasig/" target="_blank">
+                    <img src="{% static '/main/images/Logos/B_and_B_Training_Academy_Logo.png' %}" alt="BB Academy">
+                </a>
+            </div>
+            <div class="partner vecc fade-in">
+                <a href="https://example.com/VECC" target="_blank">
+                    <img src="{% static '/main/images/Logos/VECC _LOGO_Invert.png' %}" alt="VECC">
+                </a>
+            </div>
+            <div class="partner pepa fade-in">
+                <a href="https://www.facebook.com/pepa.vst2023" target="_blank">
+                    <img src="{% static '/main/images/Logos/Pepa_Meatshop_Logo.png' %}" alt="Pepa Meatshop">
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Survey Section -->
+<div id="section5">
+    <div class="to-survey-section fade-in">
+        <div class="survey-container fade-in">
+            <p class="feedback-text fade-in">GIVE US YOUR FEEDBACK</p>
+            <h2 class="fade-in">Let Us Know What <br> You Think!</h2>
+            <a href="https://example.com/survey" class="survey-button fade-in">ANSWER OUR SURVEY</a>
+        </div>
+    </div>
+</div>
+
+</div>
+
+
+{% endblock %}
+

@@ -1,0 +1,93 @@
+{% extends 'main/pages/index.html' %}
+{% load static %}
+
+{% block content %}
+
+    {% include 'main/pages/admin-pages/admin_navbar.html' %}
+<!-- Admin Panel Section -->
+<div id="section-admin-panel" class="admin-panel">
+    <h1>Admin Panel</h1>
+
+    <div class="summary-cards">
+        <div class="card">
+            <p>{{ total_images }}</p>
+            <h3 class="card-title">Images Total:</h3>
+        </div>
+        <div class="card">
+            <p>{{ recent_caption }}</p>
+            <h3 class="card-title">Recently Added Image:</h3>
+        </div>
+    </div>
+
+    <div id="section-upcoming-events" class="table-section">
+        <div class="section-header">
+            <h2>Upcoming Events</h2>
+            <a href="{% url 'add-carousel-image' %}" class="add-button">Add</a>
+        </div>
+        <div class="admin-table-wrapper">
+            <div class="table-responsive">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Image</th>
+                            <th>Caption</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for image in carousel_images %}
+                            <tr>
+                                <td>
+                                    <img src="{{ image.image.url }}" class="profile-picture" alt="Carousel Image">
+                                </td>
+                                <td>{{ image.caption }}</td>
+                                <td>
+                                    <div class="admin-dropdown">
+                                        <button class="admin-dropdown-toggle" type="button" onclick="toggleAdminDropdown({{ image.id }})">
+                                            &#9776;
+                                        </button>
+                                        <ul class="admin-dropdown-menu" id="admin-dropdown-{{ image.id }}">
+                                            <li><a class="admin-dropdown-item" href="{% url 'update-upcoming-event' image.id %}">Edit</a></li>
+                                            <li><a class="admin-dropdown-item text-danger" href="{% url 'delete-upcoming-event' image.id %}">Delete</a></li>
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<!-- Add this script to handle the dropdown toggling -->
+<script>
+    function toggleAdminDropdown(id) {
+        var dropdown = document.getElementById('admin-dropdown-' + id);
+        dropdown.classList.toggle('show');
+    }
+
+    // Close the dropdown if the user clicks outside of it or if the mouse leaves the dropdown
+    window.onclick = function(event) {
+        if (!event.target.matches('.admin-dropdown-toggle')) {
+            var dropdowns = document.getElementsByClassName("admin-dropdown-menu");
+            for (var i = 0; i < dropdowns.length; i++) {
+                var openDropdown = dropdowns[i];
+                if (openDropdown.classList.contains('show')) {
+                    openDropdown.classList.remove('show');
+                }
+            }
+        }
+    }
+
+    document.querySelectorAll('.admin-dropdown-menu').forEach(dropdown => {
+        dropdown.addEventListener('mouseleave', function() {
+            dropdown.classList.remove('show');
+        });
+    });
+</script>
+
+{% endblock %}

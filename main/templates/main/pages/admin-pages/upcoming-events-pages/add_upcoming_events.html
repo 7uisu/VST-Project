@@ -1,0 +1,19 @@
+{% extends 'main/pages/index.html' %}
+{% load static %}
+
+{% block content %}
+<div class="section-add-upcoming-events">
+    <div class="add-upcoming-events-container">
+        <h1>Add Upcoming Events</h1>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <div class="form-instructions">
+                <p><strong>Recommendation:</strong> Use 1520 x 1010 resolution.</p>
+            </div>
+            <button type="submit" class="btn btn-primary">Add Images</button>
+            <a href="{% url 'admin-panel' %}" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

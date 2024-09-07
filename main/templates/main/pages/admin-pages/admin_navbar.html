@@ -1,0 +1,34 @@
+{% load static %}
+<nav class="admin-navbar">
+    <div class="admin-navbar-logo">
+        <a class="admin-navbar-logo-link" href="{% url 'admin-panel' %}">
+            Admin Panel
+        </a>
+    </div>
+
+    <!-- Navbar Menu Items -->
+    <div class="admin-navbar-right">
+        <ul>
+            <li><a href="{% url 'admin-panel' %}">Home / Survey</a></li>
+            <li><a href="{% url 'admin-panel-carousel-images' %}">Carousel Images</a></li>
+            <li><a href="{% url 'admin-panel-more-events' %}">More Events</a></li>
+        </ul>
+    </div>
+
+    <!-- Burger Menu for Small Screens -->
+    <div class="admin-burger" id="admin-burger">
+        <div class="admin-line1"></div>
+        <div class="admin-line2"></div>
+        <div class="admin-line3"></div>
+    </div>
+</nav>
+
+<script>
+    // For Admin Nav Bar Responsive Burger
+    const adminBurger = document.getElementById('admin-burger');
+    const adminNavbarRight = document.querySelector('.admin-navbar-right');
+
+    adminBurger.addEventListener('click', () => {
+        adminNavbarRight.classList.toggle('active');
+    });
+</script>

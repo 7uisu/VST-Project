@@ -1,0 +1,60 @@
+{% load static %}
+<nav class="navbar">
+    <div class="navbar-logo">
+        <a class="navbar-logo-link" href="{% url 'home' %}">
+            <img src="{% static 'main/images/Logos/VST_LOGO.png' %}" alt="Logo">
+        </a>
+    </div>
+
+    <!-- Navbar Menu Items -->
+    <div class="navbar-center">
+        <ul>
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li><a href="{% url 'home' %}#section2" id="events-button">Events</a></li>
+            <li><a href="{% url 'home' %}#section3" id="about-button">About</a></li>
+            <li><a href="{% url 'home' %}#section4" id="partners-button">Partners</a></li>
+            <li class="navbar-dropdown">
+                <a href="#" class="dropbtn">More</a>
+                <div class="dropdown-content">
+                    <a href="{% url 'services' %}">Services</a>
+                    <a href="{% url 'events' %}">More Events</a>
+                    <a href="{% url 'contacts' %}">Contact</a>
+                    {% if user.is_authenticated and user.is_admin_user %}
+                    <a href="{% url 'admin-panel' %}" id="admin-panel-button">Admin Panel</a>   
+                    {% endif %}
+                </div>
+            </li>
+            <li><a href="{% url 'feedback' %}" id="feedback-button" class="feedback-btn"><span class="btn-text">Give Us Feedback!</span></a></li>
+        </ul>
+    </div>
+
+    <div class="user-menu">
+        <ul>
+            {% if user.is_authenticated %}
+                <li><a>{{ user.email }}</a></li>
+            {% else %}
+                <li><a href="{% url 'user-login' %}">Login</a></li>
+            {% endif %}
+        </ul>
+        <ul>
+            {% if user.is_authenticated %}
+            <li>
+                <form id="logout-form" action="{% url 'logout' %}" method="post" style="display: inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="logout-btn">
+                        Logout
+                    </button>
+                </form>
+            </li>
+            {% endif %}
+        </ul>
+    </div>
+
+    <!-- Burger Menu for Small Screens -->
+    <div class="burger" id="burger">
+        <div class="line1"></div>
+        <div class="line2"></div>
+        <div class="line3"></div>
+    </div>
+</nav>
+

@@ -1,0 +1,92 @@
+{% extends 'main/pages/index.html' %}
+{% load static %}
+
+{% block content %}
+<div id="event-details-section" class="event-details-section">
+    <div class="event-details-container">
+        <h1>{{ event.title }}</h1>
+        <p>{{ event.description }}</p>
+        <div class="event-details-images">
+            {% for image in event.images.all %}
+                <div class="image-wrapper">
+                    <img src="{{ image.image.url }}" alt="Image for {{ event.title }}" class="event-image">
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<!-- Modal for Image Viewer -->
+<div id="details-image-modal" class="details-modal">
+    <span class="details-close">&times;</span>
+    <img class="details-modal-content" id="details-modal-img">
+    <div class="details-modal-caption" id="details-caption"></div>
+    <a class="details-prev">&#10094;</a>
+    <a class="details-next">&#10095;</a>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        let modal = document.getElementById('details-image-modal');
+        let modalImg = document.getElementById('details-modal-img');
+        let captionText = document.getElementById('details-caption');
+        let images = document.querySelectorAll('.event-image');
+        let currentIndex = 0;
+
+        function showImage(index) {
+            modalImg.classList.add('fade-out');
+            setTimeout(() => {
+                modalImg.src = images[index].src;
+                captionText.innerHTML = images[index].alt;
+                modalImg.classList.remove('fade-out');
+                modalImg.classList.add('fade-in');
+            }, 300);
+        }
+
+        images.forEach((img, index) => {
+            img.onclick = function() {
+                modal.style.display = 'block';
+                showImage(index);
+                currentIndex = index;
+            };
+        });
+
+        let closeBtn = document.getElementsByClassName('details-close')[0];
+        closeBtn.onclick = function() {
+            modal.style.display = 'none';
+        };
+
+        let prevBtn = document.querySelector('.details-prev');
+        let nextBtn = document.querySelector('.details-next');
+
+        prevBtn.onclick = function() {
+            currentIndex = (currentIndex > 0) ? currentIndex - 1 : images.length - 1;
+            showImage(currentIndex);
+        };
+
+        nextBtn.onclick = function() {
+            currentIndex = (currentIndex < images.length - 1) ? currentIndex + 1 : 0;
+            showImage(currentIndex);
+        };
+
+        // Swipe event listeners
+        modal.addEventListener('touchstart', function(event) {
+            startX = event.touches[0].clientX;
+        });
+
+        modal.addEventListener('touchmove', function(event) {
+            endX = event.touches[0].clientX;
+        });
+
+        modal.addEventListener('touchend', function(event) {
+            if (startX - endX > 50) {
+                // Swipe left
+                nextBtn.click();
+            } else if (endX - startX > 50) {
+                // Swipe right
+                prevBtn.click();
+            }
+        });
+    });
+</script>
+{% endblock %}

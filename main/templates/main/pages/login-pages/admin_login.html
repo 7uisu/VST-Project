@@ -1,0 +1,16 @@
+{% extends 'main/pages/index.html' %}
+{% load static %}
+
+{% block content %}
+<div class="section-admin-login">
+    <div class="admin-login-container">
+        <h2>Admin Login</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Login</button>
+        </form>
+        <p><a href="{% url 'password-reset' %}">Forgot Password?</a></p>
+    </div>
+</div>
+{% endblock %}

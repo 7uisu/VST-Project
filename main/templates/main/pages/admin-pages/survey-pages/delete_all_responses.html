@@ -1,0 +1,16 @@
+{% extends 'main/pages/index.html' %}
+{% load static %}
+
+{% block content %}
+<div id="section-delete-event">
+    <div class="delete-event-container">
+        <h1>Delete All Responses</h1>
+        <p>Are you sure you want to delete all responses?</p>
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Delete</button>
+            <a href="{% url 'admin-panel' %}" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

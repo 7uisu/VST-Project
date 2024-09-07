@@ -1,0 +1,16 @@
+{% extends 'main/pages/index.html' %}
+{% load static %}
+
+{% block content %}
+<div class="section-delete-question">
+    <div class="delete-question-container">
+        <h2>Delete Question</h2>
+        <p>Are you sure you want to delete the question: "{{ question.text }}"?</p>
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Delete</button>
+            <a href="{% url 'admin-panel' %}" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

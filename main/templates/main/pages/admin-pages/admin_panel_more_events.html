@@ -1,0 +1,109 @@
+{% extends 'main/pages/index.html' %}
+{% load static %}
+
+{% block content %}
+
+    {% include 'main/pages/admin-pages/admin_navbar.html' %}
+<!-- Admin Panel Section -->
+<div id="section-admin-panel" class="admin-panel">
+    <h1>Admin Panel</h1>
+
+    <div class="summary-cards">
+        <div class="card">
+            <p>{{ total_events }}</p>
+            <h3 class="card-title">Events Total:</h3>
+        </div>
+        <div class="card">
+            <p>
+                {% if recent_event %}
+                    {{ recent_event.title }}
+                {% else %}
+                    No events available
+                {% endif %}
+            </p>
+            <h3 class="card-title">Recently Added Event:</h3>
+        </div>
+    </div>
+
+<!-- Events Section -->
+<div id="section-events" class="table-section">
+    <div class="section-header">
+        <h2>Events</h2>
+        <a href="{% url 'add-event' %}" class="add-button">Add Event</a>
+    </div>
+    <div class="admin-table-wrapper">
+        <div class="table-responsive">
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th class="description-column">Description</th> <!-- Add class here -->
+                        <th>Thumbnail</th>
+                        <th class="images-column">Images</th> <!-- Add class here -->
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for event in events %}
+                        <tr>
+                            <td>{{ event.title }}</td>
+                            <td class="description-column">{{ event.description }}</td> <!-- Add class here -->
+                            <td>
+                                <img src="{{ event.thumbnail.url }}" class="profile-picture" alt="Event Thumbnail">
+                            </td>
+                            <td class="images-column"> <!-- Add class here -->
+                                <div class="event-images">
+                                    {% for image in event.images.all|slice:":5" %}
+                                        <img src="{{ image.image.url }}" class="profile-picture" alt="Event Image">
+                                    {% endfor %}
+                                </div>
+                            </td>
+                            <td>
+                                <div class="admin-dropdown">
+                                    <button class="admin-dropdown-toggle" type="button" onclick="toggleAdminDropdown('event-{{ event.id }}')">
+                                        &#9776;
+                                    </button>
+                                    <ul class="admin-dropdown-menu" id="admin-dropdown-event-{{ event.id }}">
+                                        <li><a class="admin-dropdown-item" href="{% url 'update-event' event.id %}">Edit</a></li>
+                                        <li><a class="admin-dropdown-item text-danger" href="{% url 'delete-event' event.id %}">Delete</a></li>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+</div>
+
+
+<!-- Add this script to handle the dropdown toggling -->
+<script>
+    function toggleAdminDropdown(id) {
+        var dropdown = document.getElementById('admin-dropdown-' + id);
+        dropdown.classList.toggle('show');
+    }
+
+    // Close the dropdown if the user clicks outside of it or if the mouse leaves the dropdown
+    window.onclick = function(event) {
+        if (!event.target.matches('.admin-dropdown-toggle')) {
+            var dropdowns = document.getElementsByClassName("admin-dropdown-menu");
+            for (var i = 0; i < dropdowns.length; i++) {
+                var openDropdown = dropdowns[i];
+                if (openDropdown.classList.contains('show')) {
+                    openDropdown.classList.remove('show');
+                }
+            }
+        }
+    }
+
+    document.querySelectorAll('.admin-dropdown-menu').forEach(dropdown => {
+        dropdown.addEventListener('mouseleave', function() {
+            dropdown.classList.remove('show');
+        });
+    });
+</script>
+
+{% endblock %}
